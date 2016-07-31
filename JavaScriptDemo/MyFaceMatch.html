@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            img{position:absolute;width: 100px;height: 100px;}
+            div{position: absolute;width: 500px;height: 500px;}
+            #rightsideBorder{left: 500px; border-left: 2px solid black; }
+            
+        </style>
+        <h1>Click on extra face on left side to go the next level :</h1>
+    </head>
+    <body onload="faceGeneration()">
+        <div id="leftside1"></div>
+        <div id="rightsideBorder"></div>
+        <script>
+            var nofaces=5;
+            var leftside=document.getElementById("leftside1");
+            var rightside=document.getElementById("rightsideBorder");
+            function faceGeneration()
+            {
+                for(var i=0;i<nofaces;i++)
+                {
+                    var l=Math.floor(Math.random()*400);
+                    var r=Math.floor(Math.random()*400);
+                    var imgsmile=document.createElement("img");
+                    imgsmile.setAttribute("src","smile.png");
+                    imgsmile.style.top=l+"px";
+                    imgsmile.style.left=r+"px";
+                    leftside.appendChild(imgsmile);
+                    var rightsideimg=leftside.cloneNode(true);
+                    rightside.appendChild(rightsideimg);
+                }
+            
+                rightsideimg.removeChild(rightsideimg.lastChild);
+                var b=document.getElementsByTagName("body")[0];
+                leftside.lastChild.onclick=function nextLevel(event)
+                {
+                    event.stopPropagation();
+                    while(leftside.firstChild)
+                        {
+                            leftside.removeChild(leftside.firstChild);
+                        }
+                    while(rightside.firstChild)
+                        {
+                            rightside.removeChild(rightside.firstChild);
+                        }
+                    nofaces+=5;
+                    faceGeneration();
+                };
+                b.onclick=function getOver()
+                {
+                    alert("Sorry!!Game over");
+                };
+            }
+        </script>
+    </body>
+</html>
